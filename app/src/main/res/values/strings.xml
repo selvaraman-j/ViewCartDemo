@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ViewCartDemo</string>
+    <string name="product_image">Product Image</string>
+    <string name="remove">Remove</string>
+    <string name="save_for_later">Save for later</string>
+    <string name="todo_save_for_later">Todo: Save for later</string>
+    <string name="price">₹%s</string>
+    <string name="continue_text">Continue</string>
+    <string name="todo_continue">Todo: Continue</string>
+    <string name="view_price_details">View price details</string>
+    <string name="cart_empty">Your shopping cart is empty.</string>
+    <string name="removed">Removed %s</string>
+    <string name="qty">Qty:</string>
+    <string name="no_internet_connection">No Internet Connection!</string>
+</resources>

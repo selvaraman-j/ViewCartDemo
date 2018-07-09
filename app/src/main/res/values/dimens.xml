@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_view_cart_title_size">18sp</dimen>
+    <dimen name="item_view_cart_desc_size">12sp</dimen>
+    <dimen name="item_view_cart_price_size">16sp</dimen>
+    <dimen name="item_view_cart_padding_5">5dp</dimen>
+    <dimen name="cart_layout_padding_3">3dp</dimen>
+    <dimen name="no_internet_size">18sp</dimen>
+</resources>

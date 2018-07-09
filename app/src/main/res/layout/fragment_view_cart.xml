@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.selva.demo.viewcart.repository.model.ViewCartPriceModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_no_internet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_internet_connection"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/no_internet_size"
+            app:isEmpty="@{model.isEmpty}"
+            app:noInternetVisibility="@{model.isLoaded}" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/cart_continue_layout">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cart_view_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <LinearLayout
+            android:id="@+id/cart_continue_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/item_view_cart_padding_5"
+            android:visibility="gone"
+            android:weightSum="2"
+            app:isLoaded="@{model.isLoaded}"
+            app:visibility="@{model.isEmpty}">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/cart_layout_padding_3"
+                android:layout_marginStart="@dimen/cart_layout_padding_3"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/item_view_cart_price_size"
+                    android:textStyle="bold"
+                    app:totalAmount="@{model.viewCartModelList}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/view_price_details"
+                    android:textColor="@android:color/holo_blue_dark" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_continue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/holo_orange_dark"
+                android:onClick="@{model::onContinueClick}"
+                android:text="@string/continue_text"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

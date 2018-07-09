@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.selva.demo.viewcart.repository.model.ViewCartModel" />
+
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/item_view_cart_padding_5">
+
+                <LinearLayout
+                    android:id="@+id/item_image_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/image_item_cart"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:contentDescription="@string/product_image"
+                        app:imageUrl="@{model.itemImage}" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/qty"
+                            android:textColor="@android:color/black" />
+
+                        <Spinner
+                            android:id="@+id/item_spinner_quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            app:quantity="@{model}" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/item_image_layout"
+                    android:layout_toStartOf="@id/item_image_layout"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_item_cart_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{model.itemName}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/item_view_cart_title_size" />
+
+                    <TextView
+                        android:id="@+id/text_item_cart_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{model.itemDescription}"
+                        android:textSize="@dimen/item_view_cart_desc_size" />
+
+                    <TextView
+                        android:id="@+id/text_item_cart_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/item_view_cart_padding_5"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/item_view_cart_price_size"
+                        android:textStyle="bold"
+                        app:itemPrice="@{model.itemPrice}" />
+
+                    <TextView
+                        android:id="@+id/text_item_cart_delivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/item_view_cart_padding_5"
+                        android:text="@{model.itemDelivery}" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/button_save_later"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@android:drawable/ic_menu_save"
+                    android:drawableStart="@android:drawable/ic_menu_save"
+                    android:onClick="@{model::onSaveLaterClick}"
+                    android:text="@string/save_for_later"
+                    android:textAllCaps="false" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/darker_gray" />
+
+                <Button
+                    android:id="@+id/button_remove"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@android:drawable/ic_menu_delete"
+                    android:drawableStart="@android:drawable/ic_menu_delete"
+                    android:text="@string/remove"
+                    android:textAllCaps="false"
+                    app:onClick="@{model}" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</layout>
