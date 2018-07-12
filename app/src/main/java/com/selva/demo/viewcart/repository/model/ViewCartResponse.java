@@ -9,6 +9,8 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ViewCartResponse {
+    @SerializedName("itemId")
+    private String id;
     @SerializedName("itemName")
     private String title;
     @SerializedName("itemDescription")
@@ -20,6 +22,10 @@ public class ViewCartResponse {
     private String quantity;
     @SerializedName("itemPrice")
     private String price;
+
+    public String getId() {
+        return id;
+    }
 
     public void setTitle(String title) {
         this.title = title;

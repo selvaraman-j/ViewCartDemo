@@ -19,38 +19,38 @@ import java.util.List;
 
 public class ViewCartPriceModel {
     public List<ViewCartModel> viewCartModelList;
-    public boolean isLoaded;
     public boolean isEmpty;
 
     /**
      * Sets the visibility of continue button layout
      *
-     * @param view     the continue button layout
-     * @param isEmpty  boolean true if cart list is available otherwise false
-     * @param isLoaded boolean true if the cart list is loaded from server otherwise false
+     * @param view              the continue button layout
+     * @param viewCartModelList List<ViewCartModel>, the list of available cart items
      */
-    @BindingAdapter({"visibility", "isLoaded"})
-    public static void setVisibility(View view, boolean isEmpty, boolean isLoaded) {
-        if (!NetworkUtils.isNetworkConnected(view.getContext()))
-            isEmpty = true;
-        view.setVisibility(!isLoaded || isEmpty ? View.GONE : View.VISIBLE);
+    @BindingAdapter({"isShowContinue"})
+    public static void setVisibility(View view, List<ViewCartModel> viewCartModelList) {
+        view.setVisibility(null == viewCartModelList || 0 == viewCartModelList.size() ? View.GONE : View.VISIBLE);
     }
 
     /**
-     * Sets the visibility for No Internet Connection view
+     * Sets the visibility for No Internet Connection view / Your shopping cart is empty
      *
-     * @param view        the TextView
-     * @param isConnected boolean true if device connected to internet otherwise false
-     * @param isEmpty     boolean true if cart list is available otherwise false
+     * @param view    the TextView
+     * @param isEmpty boolean, true if cart list is not available otherwise false
      */
-    @BindingAdapter({"noInternetVisibility", "isEmpty"})
-    public static void setNoInternetViewVisibility(View view, boolean isConnected, boolean isEmpty) {
+    @BindingAdapter({"isEmpty"})
+    public static void setNoInternetViewVisibility(View view, boolean isEmpty) {
         if (isEmpty) {
             TextView textView = (TextView) view;
             textView.setText(view.getContext().getString(R.string.cart_empty));
             textView.setVisibility(View.VISIBLE);
+            if (!NetworkUtils.isNetworkConnected(view.getContext())) {
+                Toast.makeText(view.getContext()
+                        , view.getContext().getString(R.string.no_internet_connection)
+                        , Toast.LENGTH_SHORT).show();
+            }
         } else {
-            view.setVisibility(NetworkUtils.isNetworkConnected(view.getContext()) ? View.GONE : View.VISIBLE);
+            view.setVisibility(View.GONE);
         }
     }
 

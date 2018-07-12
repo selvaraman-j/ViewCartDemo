@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selva.demo.viewcart.R;
+import com.selva.demo.viewcart.repository.database.entity.ViewCartModelEntity;
 import com.selva.demo.viewcart.view.ui.MainActivity;
 import com.selva.demo.viewcart.viewmodel.ViewCartViewModel;
 import com.squareup.picasso.Picasso;
@@ -27,20 +28,28 @@ import java.util.List;
 
 public class ViewCartModel {
 
+    public String id;
     public String itemName;
     public String itemDescription;
     public String itemDelivery;
     public String itemImage;
-    String itemQuantity;
+    public String itemQuantity;
     public String itemPrice;
     private static boolean isTouched;
 
     /**
-     * Constructor for assigning the cart view values
+     * Empty Constructor
+     */
+    public ViewCartModel() {
+    }
+
+    /**
+     * Creates a ViewCartModel from ViewCartResponse
      *
      * @param viewCartResponse the ViewCartResponse
      */
     public ViewCartModel(ViewCartResponse viewCartResponse) {
+        this.id = viewCartResponse.getId();
         this.itemName = viewCartResponse.getTitle();
         this.itemDescription = viewCartResponse.getDescription();
         this.itemDelivery = viewCartResponse.getDelivery();
@@ -50,7 +59,23 @@ public class ViewCartModel {
     }
 
     /**
-     * create and returns the list of view cart model from view cart response
+     * Creates a ViewCartModel from ViewCartModelEntity
+     *
+     * @param viewCartModelEntity the ViewCartModelEntity
+     */
+    public ViewCartModel(ViewCartModelEntity viewCartModelEntity) {
+        this.id = viewCartModelEntity.id;
+        this.itemName = viewCartModelEntity.itemName;
+        this.itemDescription = viewCartModelEntity.itemDescription;
+        this.itemDelivery = viewCartModelEntity.itemDelivery;
+        this.itemImage = viewCartModelEntity.itemImage;
+        this.itemQuantity = viewCartModelEntity.itemQuantity;
+        this.itemPrice = viewCartModelEntity.itemPrice;
+    }
+
+
+    /**
+     * create and returns the list of view cart model from view cart response list
      *
      * @param viewCartResponseList the List<ViewCartResponse>
      * @return List<ViewCartModel>
@@ -59,6 +84,20 @@ public class ViewCartModel {
         List<ViewCartModel> viewCartModelList = new ArrayList<>();
         for (ViewCartResponse viewCartResponse : viewCartResponseList) {
             viewCartModelList.add(new ViewCartModel(viewCartResponse));
+        }
+        return viewCartModelList;
+    }
+
+    /**
+     * create and returns the list of view cart model from view cart model entity
+     *
+     * @param viewCartEntityList the List<ViewCartModelEntity>
+     * @return List<ViewCartModel>
+     */
+    public static List<ViewCartModel> getDbViewCartModelList(List<ViewCartModelEntity> viewCartEntityList) {
+        List<ViewCartModel> viewCartModelList = new ArrayList<>();
+        for (ViewCartModelEntity entity : viewCartEntityList) {
+            viewCartModelList.add(new ViewCartModel(entity));
         }
         return viewCartModelList;
     }
@@ -92,7 +131,8 @@ public class ViewCartModel {
      * @param viewCartModel the ViewCartModel
      */
     @BindingAdapter({"quantity"})
-    public static void setQuantitySpinner(final Spinner spinner, final ViewCartModel viewCartModel) {
+    public static void setQuantitySpinner(final Spinner spinner,
+                                          final ViewCartModel viewCartModel) {
         final String[] quantityArray = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         ArrayAdapter<String> quantityAdapter = new ArrayAdapter<>(spinner.getContext()
                 , android.R.layout.simple_spinner_dropdown_item, quantityArray);
@@ -162,6 +202,7 @@ public class ViewCartModel {
      *
      * @param view the Button
      */
+
     public static void onSaveLaterClick(View view) {
         Toast.makeText(view.getContext(), view.getContext().getString(R.string.todo_save_for_later), Toast.LENGTH_SHORT).show();
     }

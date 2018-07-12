@@ -1,18 +1,12 @@
 package com.selva.demo.viewcart.repository.remote;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
-
-import com.selva.demo.viewcart.repository.model.ViewCartModel;
 import com.selva.demo.viewcart.repository.model.ViewCartResponse;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -65,27 +59,11 @@ public class CartRepository {
     }
 
     /**
-     * Returns the mutable live data of view cart model list
+     * Makes the view cart list web service call
      *
-     * @return the live data view cart model listMutableLiveData<List<ViewCartModel>>
+     * @param callback The Retrofit web service call back
      */
-    public MutableLiveData<List<ViewCartModel>> getCartDetails() {
-        final MutableLiveData<List<ViewCartModel>> mutableLiveData = new MutableLiveData<>();
-        getApiClient().getViewCartList().enqueue(new Callback<List<ViewCartResponse>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<ViewCartResponse>> call, @NonNull Response<List<ViewCartResponse>> response) {
-                if (response.isSuccessful()) {
-                    List<ViewCartResponse> viewCartResponseList = response.body();
-                    if (null != viewCartResponseList) {
-                        mutableLiveData.setValue(ViewCartModel.getViewCartModelList(viewCartResponseList));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<ViewCartResponse>> call, @NonNull Throwable t) {
-            }
-        });
-        return mutableLiveData;
+    public void getCartDetails(Callback<List<ViewCartResponse>> callback) {
+        getApiClient().getViewCartList().enqueue(callback);
     }
 }
